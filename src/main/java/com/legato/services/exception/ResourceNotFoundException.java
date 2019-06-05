@@ -7,6 +7,7 @@ package com.legato.services.exception;
  * @author Niranjan
  *
  */
+
 public class ResourceNotFoundException extends RuntimeException{
 	private static final long serialVersionUID = -2912994441810155305L;
 	

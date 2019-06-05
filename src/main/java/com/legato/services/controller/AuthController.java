@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 package com.legato.services.controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +37,15 @@ import com.legato.services.view.request.UserRequestView;
 import com.legato.services.view.response.JwtResponse;
 import com.legato.services.view.response.SimpleResponseEntity;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+/**
+ * @author af83580
+ *
+ */
+
+@Api(value = "Authentication")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -44,16 +57,17 @@ public class AuthController {
 	private TokenProvider tokenProvider;
 	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
+	@ApiOperation(value = "Signing in to the application.")
 	@PostMapping("/signin")
 	public ResponseEntity<SimpleResponseEntity> authenticateUser(@Valid @RequestBody AuthRequest request) {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-		AppUser appuser = (AppUser)authentication.getPrincipal();
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String token = tokenProvider.generateToken((AppUser) authentication.getPrincipal());
 		return ResponseEntity.ok().body(new SimpleResponseEntity(HttpStatus.OK.value(), MessageConstants.SUCCESS_MESSAGE, new JwtResponse(token)));
 	}
 	
+	@ApiOperation(value = "Register a new user.")
 	@PostMapping("/signup")
 	public ResponseEntity<SimpleResponseEntity> registerUser(HttpServletRequest httpRequest, 
 			@Valid @RequestBody UserRequestView request) {

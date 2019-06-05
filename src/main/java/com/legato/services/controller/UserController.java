@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +28,6 @@ import com.legato.services.constants.MessageConstants;
 import com.legato.services.exception.DuplicateFieldException;
 import com.legato.services.exception.InvalidFormatException;
 import com.legato.services.exception.ResourceNotFoundException;
-import com.legato.services.jwt.security.dto.AppUser;
 import com.legato.services.model.UserProfile;
 import com.legato.services.repository.AuthorityRepository;
 import com.legato.services.repository.UserRepository;
@@ -40,11 +38,15 @@ import com.legato.services.view.request.UserRequestView;
 import com.legato.services.view.response.SimpleResponseEntity;
 import com.legato.services.view.response.UserResponseView;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author Niranjan
  *
  */
 
+@Api(value = "User")
 @RestController
 @RequestMapping("/user")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -59,18 +61,19 @@ public class UserController {
 	PasswordEncoder encoder;
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+	@ApiOperation(value = "View a list of available users", response = List.class)
 	@GetMapping
 	public ResponseEntity<SimpleResponseEntity> findAll(Principal principal) {
-		AppUser appuser = (AppUser)((Authentication)principal).getPrincipal();
-		System.out.println(appuser.getFirstName());
 		List<UserResponseView> userViews = userService.findAll();
 		return new ResponseEntity<>(
 				new SimpleResponseEntity(HttpStatus.OK.value(), MessageConstants.SUCCESS_MESSAGE, userViews),
 				HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Add a new user", response = UserRequestView.class)
 	@PostMapping
-	public ResponseEntity<SimpleResponseEntity> registerUser(HttpServletRequest httpRequest, @Valid @RequestBody UserRequestView request) {
+	public ResponseEntity<SimpleResponseEntity> save(HttpServletRequest httpRequest, 
+			@Valid @RequestBody UserRequestView request) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		logger.info("{} trying to register user.", username);
 		try {
@@ -90,8 +93,11 @@ public class UserController {
 				.body(new SimpleResponseEntity(HttpStatus.OK.value(), MessageConstants.SUCCESS_MESSAGE, request));
 	}
 
+	@ApiOperation(value = "Update an existing user", response = UserRequestView.class)
 	@PutMapping
-	public ResponseEntity<SimpleResponseEntity> updateUser(Principal principal, HttpServletRequest httpRequest, @Valid @RequestBody UserRequestView request) {
+	public ResponseEntity<SimpleResponseEntity> updateUser(Principal principal, 
+			HttpServletRequest httpRequest, 
+			@Valid @RequestBody UserRequestView request) {
 		logger.info("User trying to update {}", request.getUsername());
 		try {
 			userService.update(request);

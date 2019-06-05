@@ -34,11 +34,15 @@ import com.legato.services.view.request.AuthorityRequestView;
 import com.legato.services.view.response.AuthorityResponseView;
 import com.legato.services.view.response.SimpleResponseEntity;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author af83580
  *
  */
 
+@Api(value = "Authority")
 @RestController
 @RequestMapping("/authority")
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -47,6 +51,7 @@ public class AuthorityController {
 	private AuthorityService authorityService;
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthorityController.class);
 	
+	@ApiOperation(value = "Get all available authorities.")
 	@GetMapping
 	public ResponseEntity<SimpleResponseEntity> findAll() {
 		List<AuthorityResponseView> responses = authorityService.findAll();
@@ -55,6 +60,7 @@ public class AuthorityController {
 				HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Add a new authority.")
 	@PostMapping
 	public ResponseEntity<SimpleResponseEntity> saveAuthority(HttpServletRequest httpRequest,
 			@Valid @RequestBody AuthorityRequestView request, 
@@ -78,6 +84,7 @@ public class AuthorityController {
 				.body(new SimpleResponseEntity(HttpStatus.OK.value(), MessageConstants.SUCCESS_MESSAGE, request));
 	}
 
+	@ApiOperation(value = "Update an existing authority.")
 	@PutMapping
 	public ResponseEntity<SimpleResponseEntity> updateAuthority(Principal principal, 
 			HttpServletRequest httpRequest, 

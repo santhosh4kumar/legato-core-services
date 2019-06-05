@@ -39,18 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("#{'${app.allowed.headers}'.split(',')}")
 	private List<String> allowedHeaders;
 	
-	private static final String[] AUTH_WHITELIST = {
-			//unauthorized end points
-			"/auth/**",
-            // -- swagger ui
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**"
-    };
+	@Value("#{'${static.path}'.split(',')}")
+	private String[] staticPath;
 
 	@Bean
 	public AuthTokenFilter authTokenFilter() {
@@ -81,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.exceptionHandling().authenticationEntryPoint(authEntryPoint)
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().headers().frameOptions().sameOrigin()
-		.and().authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
+		.and().authorizeRequests().antMatchers(staticPath).permitAll()
 		.anyRequest().authenticated();
 		
 		httpSecurity.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -100,7 +90,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
     public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/v2/api-docs/**");
 		web.ignoring().antMatchers("/swagger.json");
+		web.ignoring().antMatchers("/swagger-ui.html");
     }
 	
 	public static void main(String[] args) {

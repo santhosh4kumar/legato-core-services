@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.legato.services.constants.MessageConstants;
 import com.legato.services.exception.DuplicateFieldException;
+import com.legato.services.exception.InvalidFormatException;
 import com.legato.services.exception.ResourceNotFoundException;
 import com.legato.services.model.UserAuthority;
 import com.legato.services.model.UserProfile;
@@ -70,10 +71,10 @@ public class UserServiceImpl implements UserService{
 			throw new DuplicateFieldException("Mobile number already exists !");
 		}
 		
-		/*if (!passwordValidator.isValid(request.getPassword())) {
+		if (!passwordValidator.isValid(request.getPassword())) {
 			logger.error("Invalid password format !");
 			throw new InvalidFormatException(MessageConstants.INVALID_PASSWORD_FORMAT_MESSAGE);
-		}*/
+		}
 
 		UserProfile user = new UserProfile();
 		user.setFirstName(request.getFirstName());
