@@ -45,7 +45,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "Authority")
 @RestController
 @RequestMapping("/authority")
-@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 public class AuthorityController {
 	@Autowired
 	private AuthorityService authorityService;
@@ -73,7 +73,7 @@ public class AuthorityController {
 		} catch (DuplicateFieldException | InvalidFormatException exception) {
 			LoggingUtil.logError(this.getClass(), new LogDetail("", null, username, httpRequest.getRequestURI(), exception), exception);
 			return ResponseEntity.ok()
-					.body(new SimpleResponseEntity(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), ""));
+					.body(new SimpleResponseEntity(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), request));
 		} catch (Exception exception) {
 			LoggingUtil.logError(this.getClass(), new LogDetail("", null, username, httpRequest.getRequestURI(), exception), exception);
 			return ResponseEntity.ok().body(

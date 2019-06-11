@@ -43,12 +43,12 @@ public class AuthorityServiceImpl implements AuthorityService {
 	@Transactional
 	public UserAuthority save(AuthorityRequestView request) {
 		if (authorityRepository.existsByAuthorityId(request.getAuthorityId())) {
-			logger.error("Duplicate authority ID found !");
-			throw new DuplicateFieldException("Username already exists !");
+			logger.error("Authority exists with same authority ID!");
+			throw new DuplicateFieldException("Authority exists with same authority ID!");
 		}
 		if (authorityRepository.existsByAuthorityName(request.getAuthorityName())) {
-			logger.error("Duplicate authority name found !");
-			throw new DuplicateFieldException("Email already exists !");
+			logger.error("Authority exists with same authority name!");
+			throw new DuplicateFieldException("Authority exists with same authority name!");
 		}
 		UserAuthority authority = new UserAuthority();
 		authority.setAuthorityId(request.getAuthorityId());

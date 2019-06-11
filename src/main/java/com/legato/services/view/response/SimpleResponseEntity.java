@@ -15,7 +15,7 @@ public class SimpleResponseEntity {
 	}
 
 	public SimpleResponseEntity(int statusCode, String statusMessage, Object data) {
-		super();
+		this();
 		this.statusCode = statusCode;
 		this.statusMessage = statusMessage;
 		this.data = data;

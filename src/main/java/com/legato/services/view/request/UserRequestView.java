@@ -55,6 +55,8 @@ public class UserRequestView {
 	private Integer status;
 
 	private Set<Long> role;
+	
+	private int userCategory;
 
 	private Set<Long> accesses;
 
@@ -180,5 +182,13 @@ public class UserRequestView {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public int getUserCategory() {
+		return userCategory;
+	}
+
+	public void setUserCategory(int userCategory) {
+		this.userCategory = userCategory;
 	}
 }

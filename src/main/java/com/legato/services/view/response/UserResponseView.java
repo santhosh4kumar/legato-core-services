@@ -30,6 +30,7 @@ public class UserResponseView {
 	private Boolean active;
 	private Integer status;
 	private Set<UserAuthority> roles;
+	private int userCategory;
 	private Set<String> accesses;
 
 	/**
@@ -181,5 +182,13 @@ public class UserResponseView {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public int getUserCategory() {
+		return userCategory;
+	}
+
+	public void setUserCategory(int userCategory) {
+		this.userCategory = userCategory;
 	}
 }

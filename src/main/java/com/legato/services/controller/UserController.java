@@ -49,7 +49,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "User")
 @RestController
 @RequestMapping("/user")
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
 	@Autowired
 	private UserService userService;

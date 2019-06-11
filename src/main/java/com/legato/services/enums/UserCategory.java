@@ -7,14 +7,13 @@ package com.legato.services.enums;
  * @author af83580
  *
  */
-public enum  UserRoleEnum {
-	ROLE_SUPERADMIN(0, "ROLE_SUPERADMIN"),
-    ROLE_ADMIN(1, "ROLE_ADMIN"),
-    ROLE_USER(2, "ROLE_USER");
+public enum UserCategory {
+	ADMIN(1, "ADMIN"),
+    USER(2, "USER");
 	
 	private int id;
 	private String name;
-	private UserRoleEnum(int id, String name){
+	private UserCategory(int id, String name){
 		this.id = id;
 		this.name = name;
 	}

@@ -53,6 +53,8 @@ public class UserProfile extends BaseEntity{
 	private String profilePic;
 	@Column(name = "PASSWORD")
 	private String password;
+	@Column(name = "USER_CATEGORY")
+	private int userCategory;
 	@Column(name = "STATUS")
 	private Integer status;
 	    
@@ -182,5 +184,13 @@ public class UserProfile extends BaseEntity{
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public int getUserCategory() {
+		return userCategory;
+	}
+
+	public void setUserCategory(int userCategory) {
+		this.userCategory = userCategory;
 	}
 }

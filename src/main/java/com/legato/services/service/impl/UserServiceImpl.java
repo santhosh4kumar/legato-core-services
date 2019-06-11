@@ -16,9 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.legato.services.constants.MessageConstants;
+import com.legato.services.enums.UserCategory;
 import com.legato.services.exception.DuplicateFieldException;
 import com.legato.services.exception.InvalidFormatException;
 import com.legato.services.exception.ResourceNotFoundException;
+import com.legato.services.jwt.security.dto.UserDto;
 import com.legato.services.model.UserAuthority;
 import com.legato.services.model.UserProfile;
 import com.legato.services.repository.AuthorityRepository;
@@ -73,7 +75,7 @@ public class UserServiceImpl implements UserService{
 		
 		if (!passwordValidator.isValid(request.getPassword())) {
 			logger.error("Invalid password format !");
-			throw new InvalidFormatException(MessageConstants.INVALID_PASSWORD_FORMAT_MESSAGE);
+			throw new InvalidFormatException(MessageConstants.INVALID_PSWD_FORMAT_MESSAGE);
 		}
 
 		UserProfile user = new UserProfile();
@@ -140,6 +142,19 @@ public class UserServiceImpl implements UserService{
 		}
 		user.setAuthorities(roles);
 		return userRepository.save(user);
+	}
+	
+	@Override
+	public UserDto getUser(String username){
+		UserDto userDetails = null;
+		UserProfile user = userRepository.findActiveUserByUsername(username);
+		if (null != user && user.getUsername().equalsIgnoreCase(username)) {
+			userDetails = new UserDto();
+			userDetails.setFirstName(user.getFirstName());
+			userDetails.setLastName(user.getLastName());
+			userDetails.setAdmin(UserCategory.ADMIN.getId() == user.getUserCategory());
+		}
+		return userDetails;
 	}
 	
 	@Override
