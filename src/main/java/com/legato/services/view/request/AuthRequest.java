@@ -1,15 +1,7 @@
 package com.legato.services.view.request;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
 public class AuthRequest {
-    @NotBlank
-    @Size(max = 16)
     private String username;
-
-    @NotBlank
-    @Size(max = 16)
     private String password;
 
     public String getUsername() {

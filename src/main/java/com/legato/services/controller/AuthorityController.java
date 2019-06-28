@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.legato.services.constants.ApplicationConstants;
 import com.legato.services.constants.MessageConstants;
 import com.legato.services.exception.DuplicateFieldException;
 import com.legato.services.exception.InvalidFormatException;
@@ -56,7 +57,7 @@ public class AuthorityController {
 	public ResponseEntity<SimpleResponseEntity> findAll() {
 		List<AuthorityResponseView> responses = authorityService.findAll();
 		return new ResponseEntity<>(
-				new SimpleResponseEntity(HttpStatus.OK.value(), MessageConstants.SUCCESS_MESSAGE, responses),
+				new SimpleResponseEntity(HttpStatus.OK.value(), MessageConstants.SUCCESS_MSG, responses),
 				HttpStatus.OK);
 	}
 
@@ -71,17 +72,17 @@ public class AuthorityController {
 			UserAuthority authority = authorityService.save(request);
 			request.setId(authority.getId());
 		} catch (DuplicateFieldException | InvalidFormatException exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail("", null, username, httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, username, httpRequest.getRequestURI(), exception), exception);
 			return ResponseEntity.ok()
 					.body(new SimpleResponseEntity(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), request));
 		} catch (Exception exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail("", null, username, httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, username, httpRequest.getRequestURI(), exception), exception);
 			return ResponseEntity.ok().body(
-					new SimpleResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error !", ""));
+					new SimpleResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(), MessageConstants.INTERNAL_SERVER_ERR_MSG, ""));
 		}
 		LOGGER.info("{} saved authority successfully.", username);
 		return ResponseEntity.ok()
-				.body(new SimpleResponseEntity(HttpStatus.OK.value(), MessageConstants.SUCCESS_MESSAGE, request));
+				.body(new SimpleResponseEntity(HttpStatus.OK.value(), MessageConstants.SUCCESS_MSG, request));
 	}
 
 	@ApiOperation(value = "Update an existing authority.")
@@ -93,16 +94,16 @@ public class AuthorityController {
 		try {
 			authorityService.update(request);
 		} catch(ResourceNotFoundException exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail("", principal.getName(), principal.getName(), httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, principal.getName(), httpRequest.getRequestURI(), exception), exception);
 			return ResponseEntity.ok()
 					.body(new SimpleResponseEntity(HttpStatus.NOT_FOUND.value(), exception.getMessage(), ""));
 		} catch(DuplicateFieldException exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail("", principal.getName(), principal.getName(), httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, principal.getName(), httpRequest.getRequestURI(), exception), exception);
 			return ResponseEntity.ok()
 					.body(new SimpleResponseEntity(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), ""));
 		}
 		LOGGER.info("{} updated successfully.", principal.getName());
 		return ResponseEntity.ok()
-				.body(new SimpleResponseEntity(HttpStatus.OK.value(), MessageConstants.SUCCESS_MESSAGE, request));
+				.body(new SimpleResponseEntity(HttpStatus.OK.value(), MessageConstants.SUCCESS_MSG, request));
 	}
 }

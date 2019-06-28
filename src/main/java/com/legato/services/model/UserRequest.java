@@ -43,11 +43,15 @@ public class UserRequest extends BaseEntity {
 	private Date birthDate;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "MANAGER_ID", referencedColumnName = "id")
-	private UserRequest managerId;
+	private UserProfile managerId;
 	@Column(name = "PROFILE_PIC")
 	private String profilePic;
 	@Column(name = "PASSWORD")
 	private String password;
+	@Column(name = "ADMIN")
+	private Boolean admin;
+	@Column(name = "STATUS")
+	private Integer status;
 
 	public UserRequest() {
 		// Auto-generated constructor stub
@@ -117,11 +121,11 @@ public class UserRequest extends BaseEntity {
 		this.birthDate = birthDate;
 	}
 
-	public UserRequest getManagerId() {
+	public UserProfile getManagerId() {
 		return managerId;
 	}
 
-	public void setManagerId(UserRequest managerId) {
+	public void setManagerId(UserProfile managerId) {
 		this.managerId = managerId;
 	}
 
@@ -139,5 +143,21 @@ public class UserRequest extends BaseEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 }

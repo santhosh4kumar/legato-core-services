@@ -23,8 +23,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.legato.services.jwt.security.config.AuthEntryPoint;
-import com.legato.services.jwt.security.config.AuthTokenFilter;
+import com.legato.services.security.config.AuthEntryPoint;
+import com.legato.services.security.config.AuthTokenFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -72,7 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().headers().frameOptions().sameOrigin()
 		.and().authorizeRequests().antMatchers(staticPath).permitAll()
-		.anyRequest().authenticated();
+		//.anyRequest().authenticated()
+		;
 		
 		httpSecurity.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}

@@ -1,4 +1,4 @@
-package com.legato.services.jwt.security.config;
+package com.legato.services.security.config;
 
 import java.io.IOException;
 

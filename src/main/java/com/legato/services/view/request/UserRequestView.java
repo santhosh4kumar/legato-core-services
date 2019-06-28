@@ -60,6 +60,8 @@ public class UserRequestView {
 
 	private Set<Long> accesses;
 
+	private int managerId;
+	
 	public UserRequestView() {
 		// Auto-generated constructor stub
 	}
@@ -190,5 +192,22 @@ public class UserRequestView {
 
 	public void setUserCategory(int userCategory) {
 		this.userCategory = userCategory;
+	}
+
+	public int getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(int managerId) {
+		this.managerId = managerId;
+	}
+
+	@Override
+	public String toString() {
+		return "UserRequestView [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username="
+				+ username + ", email=" + email + ", password=" + password + ", mobile=" + mobile + ", addressLine1="
+				+ addressLine1 + ", addressLine2=" + addressLine2 + ", birthDate=" + birthDate + ", profilePic="
+				+ profilePic + ", active=" + active + ", status=" + status + ", role=" + role + ", userCategory="
+				+ userCategory + ", accesses=" + accesses + ", managerId=" + managerId + "]";
 	}
 }

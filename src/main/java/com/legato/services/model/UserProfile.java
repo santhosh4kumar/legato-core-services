@@ -1,4 +1,5 @@
 package com.legato.services.model;
+
 /**
  * 
  */
@@ -21,7 +22,7 @@ import javax.persistence.UniqueConstraint;
 /**
  * @author Af83580
  *
- * This class is to describe the user profiles which are approved
+ *         This class is to describe the user profiles which are approved
  */
 
 @Entity
@@ -29,7 +30,7 @@ import javax.persistence.UniqueConstraint;
 		@UniqueConstraint(columnNames = { "USERNAME" }, name = "UNIQUE_USERNAME"),
 		@UniqueConstraint(columnNames = { "MOBILE" }, name = "UNIQUE_MOBILE"),
 		@UniqueConstraint(columnNames = { "EMAIL_ID" }, name = "UNIQUE_EMAIL_ID") })
-public class UserProfile extends BaseEntity{
+public class UserProfile extends BaseEntity {
 	@Column(name = "USERNAME")
 	private String username;
 	@Column(name = "FIRST_NM")
@@ -53,26 +54,22 @@ public class UserProfile extends BaseEntity{
 	private String profilePic;
 	@Column(name = "PASSWORD")
 	private String password;
-	@Column(name = "USER_CATEGORY")
-	private int userCategory;
+	@Column(name = "ADMIN")
+	private Boolean admin;
 	@Column(name = "STATUS")
 	private Integer status;
-	    
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "AUTHORITY_MANAGER", 
-    	joinColumns = @JoinColumn(name = "USER_ID", foreignKey = @ForeignKey(name = "FOREIGN_AUTHORITY_USER_ID")), 
-    	inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", foreignKey = @ForeignKey(name = "FOREIGN_AUTHORITY_ID")))
-    private Set<UserAuthority> authorities = new HashSet<>();
-    
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "ACCESS_MANAGER", 
-    	joinColumns = @JoinColumn(name = "USER_ID", foreignKey = @ForeignKey(name = "FOREIGN_ACCESS_USER_ID")), 
-    	inverseJoinColumns = @JoinColumn(name = "ACCESS_ID", foreignKey = @ForeignKey(name = "FOREIGN_ACCESS_ID")))
-    private Set<UserAccess> accesses = new HashSet<>();
 
-    public UserProfile() {
-    	// Auto-generated constructor stub
-    }
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "AUTHORITY_MANAGER", joinColumns = @JoinColumn(name = "USER_ID", foreignKey = @ForeignKey(name = "FOREIGN_AUTHORITY_USER_ID")), inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", foreignKey = @ForeignKey(name = "FOREIGN_AUTHORITY_ID")))
+	private Set<UserAuthority> authorities = new HashSet<>();
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "ACCESS_MANAGER", joinColumns = @JoinColumn(name = "USER_ID", foreignKey = @ForeignKey(name = "FOREIGN_ACCESS_USER_ID")), inverseJoinColumns = @JoinColumn(name = "ACCESS_ID", foreignKey = @ForeignKey(name = "FOREIGN_ACCESS_ID")))
+	private Set<UserAccess> accesses = new HashSet<>();
+
+	public UserProfile() {
+		// Auto-generated constructor stub
+	}
 
 	public String getUsername() {
 		return username;
@@ -186,11 +183,11 @@ public class UserProfile extends BaseEntity{
 		this.status = status;
 	}
 
-	public int getUserCategory() {
-		return userCategory;
+	public Boolean getAdmin() {
+		return admin;
 	}
 
-	public void setUserCategory(int userCategory) {
-		this.userCategory = userCategory;
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
 	}
 }

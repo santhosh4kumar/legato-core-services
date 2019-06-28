@@ -1,5 +1,6 @@
 package com.legato.services.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +14,7 @@ import com.legato.services.model.UserProfile;
 public interface UserRepository extends JpaRepository<UserProfile, Long> {
     Optional<UserProfile> findByUsername(String username);
     @Query("SELECT u FROM UserProfile u WHERE LOWER(u.username)= LOWER(:username) AND (CURRENT_DATE >= u.validFrom and COALESCE(u.validTo, STR_TO_DATE('8888-12-31','%Y-%d-%m')) > CURRENT_DATE) AND u.active = true")
-	public UserProfile findActiveUserByUsername(@Param("username") String userId);
+	UserProfile findActiveUserByUsername(@Param("username") String userId);
     Boolean existsByUsername(String username);
     Boolean existsByEmail(String email);
     @Query("SELECT CASE WHEN COUNT(u) > 0 THEN 'true' ELSE 'false' END FROM UserProfile u WHERE u.email = :email and u.id != :id")
@@ -21,4 +22,6 @@ public interface UserRepository extends JpaRepository<UserProfile, Long> {
     Boolean existsByMobile(String mobile);
     @Query("SELECT CASE WHEN COUNT(u) > 0 THEN 'true' ELSE 'false' END FROM UserProfile u WHERE u.mobile = :mobile and u.id != :id")
     Boolean existsByMobileExceptUser(@Param("id") Long id, @Param("mobile") String mobile);
+    @Query("SELECT u FROM UserProfile u WHERE (CURRENT_DATE >= u.validFrom and COALESCE(u.validTo, STR_TO_DATE('8888-12-31','%Y-%d-%m')) > CURRENT_DATE) AND u.active = true AND u.admin = true")
+    List<UserProfile> findAdmins();
 }

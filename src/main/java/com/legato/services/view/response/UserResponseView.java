@@ -19,6 +19,8 @@ public class UserResponseView {
 	private Date updatedAt;
 	private String updatedBy;
 	private String username;
+	private String firstName;
+	private String lastName;
 	private String email;
 	private String mobile;
 	private String addressLine1;
@@ -190,5 +192,21 @@ public class UserResponseView {
 
 	public void setUserCategory(int userCategory) {
 		this.userCategory = userCategory;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 }
