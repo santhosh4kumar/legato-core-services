@@ -3,63 +3,27 @@ package com.legato.services.view.request;
 import java.util.Date;
 import java.util.Set;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class UserRequestView {
 	private Long id;
-	@NotBlank
-	@Size(min = 3, max = 50)
 	private String firstName;
-
-	@NotBlank
-	@Size(min = 3, max = 50)
 	private String lastName;
-
-	@NotBlank
-	@Size(min = 3, max = 50)
+	private int gender;
 	private String username;
-
-	@NotBlank
-	@Size(max = 60)
-	@Email
 	private String email;
-
-	@NotBlank
-	@Size(min = 8, max = 16)
 	private String password;
-
-	@NotBlank
-	@Size(max = 10)
-	@Pattern(regexp = "(^$|[0-9]{10})")
 	private String mobile;
-
-	@Size(min = 3, max = 10)
 	private String addressLine1;
-
-	@Size(min = 3, max = 100)
 	private String addressLine2;
-
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date birthDate;
-
-	@Size(max = 200)
 	private String profilePic;
-	
 	private Boolean active;
-	
 	private Integer status;
-
 	private Set<Long> role;
-	
 	private int userCategory;
-
 	private Set<Long> accesses;
-
 	private int managerId;
 	
 	public UserRequestView() {
@@ -209,5 +173,13 @@ public class UserRequestView {
 				+ addressLine1 + ", addressLine2=" + addressLine2 + ", birthDate=" + birthDate + ", profilePic="
 				+ profilePic + ", active=" + active + ", status=" + status + ", role=" + role + ", userCategory="
 				+ userCategory + ", accesses=" + accesses + ", managerId=" + managerId + "]";
+	}
+
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 }

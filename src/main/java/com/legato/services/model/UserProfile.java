@@ -37,6 +37,8 @@ public class UserProfile extends BaseEntity {
 	private String firstName;
 	@Column(name = "LAST_NM")
 	private String lastName;
+	@Column(name = "GENDER")
+	private Integer gender;
 	@Column(name = "EMAIL_ID")
 	private String email;
 	@Column(name = "MOBILE")
@@ -189,5 +191,13 @@ public class UserProfile extends BaseEntity {
 
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
+	}
+
+	public Integer getGender() {
+		return gender;
+	}
+
+	public void setGender(Integer gender) {
+		this.gender = gender;
 	}
 }

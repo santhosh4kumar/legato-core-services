@@ -21,6 +21,7 @@ public class UserResponseView {
 	private String username;
 	private String firstName;
 	private String lastName;
+	private int gender;
 	private String email;
 	private String mobile;
 	private String addressLine1;
@@ -208,5 +209,13 @@ public class UserResponseView {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 }

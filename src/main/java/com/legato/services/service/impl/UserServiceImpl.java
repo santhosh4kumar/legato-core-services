@@ -197,6 +197,7 @@ public class UserServiceImpl implements UserService{
 		view.setUsername(user.getUsername());
 		view.setFirstName(user.getFirstName());
 		view.setLastName(user.getLastName());
+		view.setGender(user.getGender());
 		view.setActive(user.isActive());
 		view.setProfilePic(user.getProfilePic());
 		return view;

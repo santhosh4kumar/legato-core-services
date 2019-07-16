@@ -6,6 +6,7 @@ package com.legato.services.util;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.legato.services.constants.ApplicationConstants;
 import com.legato.services.jwt.security.dto.AppUser;
 
 /**
@@ -30,16 +31,15 @@ public class LogDetail {
 		}
 	}
 	
-	public LogDetail(String system, String username, String uri) {
+	public LogDetail(String username, String uri) {
 		this();
-		this.system = system;
+		this.system = ApplicationConstants.SYSTEM_NAME;
 		this.username = username;
 		this.uri = uri;
 	}
 	
-	public LogDetail(String system, String username, String uri, Exception exception) {
+	public LogDetail(String username, String uri, Exception exception) {
 		super();
-		this.system = system;
 		this.username = username;
 		this.uri = uri;
 		this.exception = exception;

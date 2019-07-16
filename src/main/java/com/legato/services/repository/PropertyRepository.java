@@ -6,7 +6,7 @@ package com.legato.services.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.legato.services.model.Property;
+import com.legato.services.model.ApplicationProperty;
 
 /**
  * @author AF83580
@@ -14,6 +14,6 @@ import com.legato.services.model.Property;
  */
 
 @Repository
-public interface PropertyRepository extends JpaRepository<Property, Long>{
+public interface PropertyRepository extends JpaRepository<ApplicationProperty, Long>{
 	boolean existsByPropertyName(String propertyName);
 }

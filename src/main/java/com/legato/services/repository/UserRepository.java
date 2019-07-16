@@ -10,6 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import com.legato.services.model.UserProfile;
 
+/**
+ * @author AF83580
+ *
+ */
+
 @Repository
 public interface UserRepository extends JpaRepository<UserProfile, Long> {
     Optional<UserProfile> findByUsername(String username);

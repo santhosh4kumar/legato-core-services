@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.legato.services.constants.MessageConstants;
 import com.legato.services.exception.DuplicateFieldException;
-import com.legato.services.model.Property;
+import com.legato.services.model.ApplicationProperty;
 import com.legato.services.repository.PropertyRepository;
 import com.legato.services.service.PropertyService;
 import com.legato.services.view.request.PropertyRequestView;
@@ -40,25 +40,29 @@ public class PropertyServiceImpl implements PropertyService {
 	
 	@Override
 	@Transactional
-	public Property findById(long id){
+	public ApplicationProperty findById(long id){
 		return propertyRepository.findById(id).orElse(null);
 	}
 	
 	@Override
 	@Transactional
-	public Property save(PropertyRequestView request) {
+	public ApplicationProperty save(PropertyRequestView request) {
 		if (propertyRepository.existsByPropertyName(request.getPropertyName())) {
 			throw new DuplicateFieldException(MessageConstants.DUPLICATE_PROPERTY_NAME_MSG);
 		}
-		Property property = new Property();
+		ApplicationProperty property = new ApplicationProperty();
 		property.setPropertyName(request.getPropertyName());
+		property.setPropertyDesc(request.getPropertyDesc());
 		property.setPropertyValue(request.getPropertyValue());
 		return propertyRepository.save(property);
 	}
 	
-	private PropertyResponseView getResponse(Property property) {
-		return new PropertyResponseView(property.getId(), 
-				property.getPropertyName(), 
-				property.getPropertyValue());
+	private PropertyResponseView getResponse(ApplicationProperty property) {
+		PropertyResponseView view = new PropertyResponseView();
+		view.setId(property.getId());
+		view.setPropertyId(property.getPropertyId());
+		view.setPropertyName(property.getPropertyName());
+		view.setPropertyDesc(property.getPropertyDesc());
+		return view;
 	}
 }

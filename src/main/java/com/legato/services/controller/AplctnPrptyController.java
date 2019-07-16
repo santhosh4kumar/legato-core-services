@@ -22,11 +22,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.legato.services.constants.ApplicationConstants;
 import com.legato.services.constants.MessageConstants;
 import com.legato.services.exception.DuplicateFieldException;
 import com.legato.services.exception.InvalidFormatException;
-import com.legato.services.model.Property;
+import com.legato.services.model.ApplicationProperty;
 import com.legato.services.service.PropertyService;
 import com.legato.services.util.LogDetail;
 import com.legato.services.util.LoggingUtil;
@@ -45,7 +44,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "Property")
 @RestController
 @RequestMapping("/property")
-public class PropertiesController {
+public class AplctnPrptyController {
 	@Autowired
 	private PropertyService propertyService;
 	
@@ -69,14 +68,14 @@ public class PropertiesController {
 			@Valid @RequestBody PropertyRequestView request) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		try {
-			Property user = propertyService.save(request);
+			ApplicationProperty user = propertyService.save(request);
 			request.setId(user.getId());
 		} catch (DuplicateFieldException | InvalidFormatException exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, username, httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail(username, httpRequest.getRequestURI(), exception), exception);
 			return ResponseEntity.ok()
 					.body(new SimpleResponseEntity(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), ""));
 		} catch (Exception exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, username, httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail(username, httpRequest.getRequestURI(), exception), exception);
 			return ResponseEntity.ok().body(
 					new SimpleResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(), MessageConstants.INTERNAL_SERVER_ERR_MSG, ""));
 		}

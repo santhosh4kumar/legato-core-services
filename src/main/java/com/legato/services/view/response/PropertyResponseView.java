@@ -9,19 +9,10 @@ package com.legato.services.view.response;
  */
 public class PropertyResponseView {
 	private Long id;
+	private String propertyId;
 	private String propertyName;
+	private String propertyDesc;
 	private String propertyValue;
-	
-	public PropertyResponseView() {
-		// Auto-generated constructor stub
-	}
-
-	public PropertyResponseView(Long id, String propertyName, String propertyValue) {
-		super();
-		this.id = id;
-		this.propertyName = propertyName;
-		this.propertyValue = propertyValue;
-	}
 
 	public Long getId() {
 		return id;
@@ -31,12 +22,28 @@ public class PropertyResponseView {
 		this.id = id;
 	}
 
+	public String getPropertyId() {
+		return propertyId;
+	}
+
+	public void setPropertyId(String propertyId) {
+		this.propertyId = propertyId;
+	}
+
 	public String getPropertyName() {
 		return propertyName;
 	}
 
 	public void setPropertyName(String propertyName) {
 		this.propertyName = propertyName;
+	}
+
+	public String getPropertyDesc() {
+		return propertyDesc;
+	}
+
+	public void setPropertyDesc(String propertyDesc) {
+		this.propertyDesc = propertyDesc;
 	}
 
 	public String getPropertyValue() {

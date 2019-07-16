@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.legato.services.constants.ApplicationConstants;
 import com.legato.services.constants.MessageConstants;
 import com.legato.services.enums.UserCategory;
 import com.legato.services.enums.UserStatus;
@@ -71,7 +70,7 @@ public class UserController {
 	@GetMapping
 	public ResponseEntity<SimpleResponseEntity> findAll(Principal principal) {
 		List<UserResponseView> views = userService.findAll();
-		LoggingUtil.logInfo(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, "", ""));
+		LoggingUtil.logInfo(this.getClass(), new LogDetail("", ""));
 		return new ResponseEntity<>(
 				new SimpleResponseEntity(HttpStatus.OK.value(), MessageConstants.SUCCESS_MSG, views),
 				HttpStatus.OK);
@@ -94,11 +93,11 @@ public class UserController {
 			}
 			request.setId(user.getId());
 		} catch (DuplicateFieldException | InvalidFormatException exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, username, httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail(username, httpRequest.getRequestURI(), exception), exception);
 			return ResponseEntity.ok()
 					.body(new SimpleResponseEntity(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), request));
 		} catch (Exception exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, username, httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail(username, httpRequest.getRequestURI(), exception), exception);
 			return ResponseEntity.ok().body(
 					new SimpleResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(), MessageConstants.INTERNAL_SERVER_ERR_MSG, request));
 		}
@@ -117,11 +116,11 @@ public class UserController {
 		try {
 			userService.update(request);
 		} catch(ResourceNotFoundException exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, principal.getName(), httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail(principal.getName(), httpRequest.getRequestURI(), exception), exception);
 			return ResponseEntity.ok()
 					.body(new SimpleResponseEntity(HttpStatus.NOT_FOUND.value(), exception.getMessage(), ""));
 		} catch(DuplicateFieldException exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, principal.getName(), httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail(principal.getName(), httpRequest.getRequestURI(), exception), exception);
 			return ResponseEntity.ok()
 					.body(new SimpleResponseEntity(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), ""));
 		}
@@ -160,22 +159,22 @@ public class UserController {
 					new SimpleResponseEntity(HttpStatus.OK.value(), MessageConstants.REGISTRATION_SUCCESS_MSG, request),
 					HttpStatus.OK);
 		} catch (DuplicateFieldException exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, "", httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail("", httpRequest.getRequestURI(), exception), exception);
 			return new ResponseEntity<>(
 					new SimpleResponseEntity(HttpStatus.CONFLICT.value(), exception.getMessage(), request),
 					HttpStatus.CONFLICT);
 		} catch (InvalidFormatException exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, "", httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail("", httpRequest.getRequestURI(), exception), exception);
 			return new ResponseEntity<>(
 					new SimpleResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY.value(), exception.getMessage(), request),
 					HttpStatus.UNPROCESSABLE_ENTITY);
 		} catch (ResourceNotFoundException exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, "", httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail("", httpRequest.getRequestURI(), exception), exception);
 			return new ResponseEntity<>(
 					new SimpleResponseEntity(HttpStatus.NOT_FOUND.value(), exception.getMessage(), request),
 					HttpStatus.NOT_FOUND);
 		} catch (Exception exception) {
-			LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, "", httpRequest.getRequestURI(), exception), exception);
+			LoggingUtil.logError(this.getClass(), new LogDetail("", httpRequest.getRequestURI(), exception), exception);
 			return new ResponseEntity<>(
 					new SimpleResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(), MessageConstants.INTERNAL_SERVER_ERR_MSG, request), 
 					HttpStatus.INTERNAL_SERVER_ERROR);

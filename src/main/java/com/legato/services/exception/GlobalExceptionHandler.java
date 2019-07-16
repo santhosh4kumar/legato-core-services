@@ -18,7 +18,6 @@ import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.legato.services.constants.ApplicationConstants;
 import com.legato.services.util.LogDetail;
 import com.legato.services.util.LoggingUtil;
 import com.legato.services.view.response.SimpleResponseEntity;
@@ -34,7 +33,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception, 
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, "", "", exception), exception);
+		LoggingUtil.logError(this.getClass(), new LogDetail("", "", exception), exception);
 		SimpleResponseEntity errorDetails = new SimpleResponseEntity(HttpServletResponse.SC_BAD_REQUEST,
 				"Form validation failed!", request.getDescription(false));
 		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
@@ -43,7 +42,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<?> resourceNotFoundException(Principal principal, ResourceNotFoundException exception,
 			WebRequest request) {
-		LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, "", "", exception), exception);
+		LoggingUtil.logError(this.getClass(), new LogDetail("", "", exception), exception);
 		SimpleResponseEntity errorDetails = new SimpleResponseEntity(HttpServletResponse.SC_NOT_FOUND,
 				exception.getMessage(), request.getDescription(false));
 		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
@@ -51,7 +50,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(BadCredentialsException.class)
 	public ResponseEntity<?> badCredentialsExceptionHandler(Exception exception, WebRequest request) {
-		LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, "", "", exception), exception);
+		LoggingUtil.logError(this.getClass(), new LogDetail("", "", exception), exception);
 		SimpleResponseEntity errorDetails = new SimpleResponseEntity(HttpServletResponse.SC_UNAUTHORIZED,
 				exception.getMessage(), request.getDescription(false));
 		return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
@@ -59,7 +58,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(BadRequest.class)
 	public ResponseEntity<?> badRequestExceptionHandler(Exception exception, WebRequest request) {
-		LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, "", "", exception), exception);
+		LoggingUtil.logError(this.getClass(), new LogDetail("", "", exception), exception);
 		SimpleResponseEntity errorDetails = new SimpleResponseEntity(HttpServletResponse.SC_BAD_REQUEST,
 				exception.getMessage(), request.getDescription(false));
 		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
@@ -67,7 +66,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<?> globleExcpetionHandler(Exception exception, WebRequest request) {
-		LoggingUtil.logError(this.getClass(), new LogDetail(ApplicationConstants.SYSTEM_NAME, "", "", exception), exception);
+		LoggingUtil.logError(this.getClass(), new LogDetail("", "", exception), exception);
 		SimpleResponseEntity errorDetails = new SimpleResponseEntity(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 				exception.getMessage(), request.getDescription(false));
 		return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
